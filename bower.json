@@ -1,0 +1,21 @@
+{
+  "name": "gaoquanblog",
+  "description": "",
+  "main": "",
+  "authors": [
+    "GaoQ <18912936976@163.com>"
+  ],
+  "license": "MIT",
+  "homepage": "https://github.com/GaoQ1/gaoquanblog",
+  "moduleType": [],
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap": "~3.3.5"
+  }
+}
