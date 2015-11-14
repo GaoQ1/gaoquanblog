@@ -4,28 +4,14 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
-
+var session = require('express-session');
+var MongoStore = require('connect-mongo')(session);
+var flash = require('connect-flash');
 var routes = require('./routes/index');
 var users = require('./routes/users');
 var articles = require('./routes/articles');
-
-var db = require('./db');
-var settings = require('./settings');
-var session = require('express-session');
-var MongoStore = require('connect-mongo')(session);
-app.use(session({
-  secret:settings.cookieSecret,
-  key:settings.db,
-  cookie:{maxAge:1000*60*24*30},
-  resave:true,
-  saveUninitialized:true,
-  store:new MongoStore({
-    db:settings.db,
-    host:settings.host,
-    port:settings.port
-  })
-}))
-
+require('./utils');
+require('./models/model');
 var app = express();
 
 // view engine setup
@@ -40,7 +26,26 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
-
+//执行完此中间件之后,req.session
+app.use(session({
+    secret:'gaoquansecret', //密钥,用来防止session被篡改
+    key:'gaoquankey', //cookie name 的名字
+    cookie:{maxAge:1000*60*24*30},//设置过期时间
+    resave:true,
+    saveUninitialized:true,
+    store:new MongoStore({
+        db:'gaoquanblog',
+        host:'127.0.0.1',
+        port:'27017'
+    })
+}));
+app.use(flash());
+app.use(function(req,res,next){
+    res.locals.user = req.session.user;
+    res.locals.success = req.flash('success').toString();
+    res.locals.error = req.flash('error').toString();
+    next();
+});
 app.use('/', routes);
 app.use('/users', users);
 app.use('/articles', articles);

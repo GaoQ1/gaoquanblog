@@ -1,5 +1,38 @@
 <% include include/header.html%>
 <div class="container">
-  主页
+  <div class="media-list">
+    <%
+      articles.forEach(function(article){
+    %>
+      <li class="media">
+        <div class="media-left">
+          <img src="<%=article.user.avatar%>" alt="" class="media-object"/>
+        </div>
+        <div class="media-body">
+          <h4 class="media-heading">
+            <a href="/articles/detail/<%=article._id%>"><%=article.title%></a>
+          </h4>
+          <p class="media-left"><%- article.content%></p>
+        </div>
+        <div class="media-bottom">
+          作者：<%=article.user.username%>
+          发表时间：<%=article.createAt.toLocaleString()%>
+        </div>
+      </li>
+    <%
+    })
+    %>
+  </div>
+  <nav>
+    <ul class="pagination">
+      <%
+      for(var i=1;i<=totalPage;i++){
+      %>
+      <li><a href="/articles/list/<%=i%>/<%=pageSize%>"><%=i%></a></li>
+      <%
+      }
+      %>
+    </ul>
+  </nav>
 </div>
 <% include include/footer.html%>

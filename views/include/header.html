@@ -20,10 +20,33 @@
     </div>
     <div class="collapse navbar-collapse" id="menus">
       <ul class="nav navbar-nav">
+        <%
+        if(!user){
+        %>
         <li class="active"><a href="/users/reg">注册</a></li>
         <li><a href="/users/login">登录</a></li>
+        <%
+        }else{
+        %>
         <li><a href="/articles/add">发表文章</a></li>
         <li><a href="/users/logout">退出</a></li>
+        <%
+        }
+        %>
       </ul>
     </div>
   </nav>
+  <div class="container text-center">
+    <%
+    if(success){
+    %>
+    <div class="alert alert-success"><%=success%></div>
+    <%
+    }
+    if(error){
+    %>
+    <div class="alert alert-danger"><%=error%></div>
+    <%
+    }
+    %>
+  </div>
