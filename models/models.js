@@ -11,6 +11,9 @@ module.exports = {
         user:{type:ObjectId,ref:'User'},
         title:String,
         content:String,
-        createAt:{type:Date,default:Date.now}
+        createAt:{type:Date,default:Date.now},
+        comments:[{user:{type:ObjectId,ref:'User'},content:String,createAt:{type:Date,default:Date.now}}],
+        pv:{type:Number,default:0}
     }
+
 }

@@ -17,6 +17,8 @@
         <div class="media-bottom">
           作者：<%=article.user.username%>
           发表时间：<%=article.createAt.toLocaleString()%>
+          阅读：<%=article.pv%>
+          评论：<%=article.comments.length%>
         </div>
       </li>
     <%
@@ -28,7 +30,7 @@
       <%
       for(var i=1;i<=totalPage;i++){
       %>
-      <li><a href="/articles/list/<%=i%>/<%=pageSize%>"><%=i%></a></li>
+      <li><a href="/articles/list/<%=i%>/<%=pageSize%>?keyword=<%=keyword%>"><%=i%></a></li>
       <%
       }
       %>

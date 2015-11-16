@@ -21,7 +21,19 @@ app.engine('html',require('ejs').__express);
 
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
-app.use(logger('dev'));
+
+//正常日志
+var accessLog = fs.createWriteStream('access.log',{flag:'a'});
+app.use(logger('dev'),{stream:accessLog});
+
+//错误日志
+var errorLog = fs.createWriteStream('error.log',{flag:'a'});
+app.use(function(err,req,res,next){
+    var meta = '[' + new Date() + ']' + req.url +'\n';
+    errorLog.write(meta + err.stack + '\n');
+    next();
+});
+
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
@@ -42,6 +54,7 @@ app.use(session({
 app.use(flash());
 app.use(function(req,res,next){
     res.locals.user = req.session.user;
+    res.locals.keyword = req.session.keyword;
     res.locals.success = req.flash('success').toString();
     res.locals.error = req.flash('error').toString();
     next();
@@ -52,9 +65,7 @@ app.use('/articles', articles);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
-  var err = new Error('Not Found');
-  err.status = 404;
-  next(err);
+    res.render("404");
 });
 
 // error handlers
