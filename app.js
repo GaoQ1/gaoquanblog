@@ -2,6 +2,7 @@ var express = require('express');
 var path = require('path');
 var favicon = require('serve-favicon');
 var logger = require('morgan');
+var fs = require('fs');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var session = require('express-session');
@@ -10,6 +11,7 @@ var flash = require('connect-flash');
 var routes = require('./routes/index');
 var users = require('./routes/users');
 var articles = require('./routes/articles');
+
 require('./utils');
 require('./models/model');
 var app = express();
@@ -22,7 +24,7 @@ app.engine('html',require('ejs').__express);
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 
-//正常日志
+/*//正常日志
 var accessLog = fs.createWriteStream('access.log',{flag:'a'});
 app.use(logger('dev'),{stream:accessLog});
 
@@ -32,7 +34,7 @@ app.use(function(err,req,res,next){
     var meta = '[' + new Date() + ']' + req.url +'\n';
     errorLog.write(meta + err.stack + '\n');
     next();
-});
+});*/
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
