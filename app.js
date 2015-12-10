@@ -46,10 +46,10 @@ app.use(session({
     key:'gaoquankey', //cookie name 的名字
     cookie:{maxAge:1000*60*24*30},//设置过期时间
     resave:true,
-    saveUninitialized:true,
+        saveUninitialized:true,
     store:new MongoStore({
         db:'gaoquanblog',
-        host:'127.0.0.1',
+        host:'123.57.143.189',
         port:'27017'
     })
 }));
